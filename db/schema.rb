@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_30_062510) do
+ActiveRecord::Schema.define(version: 2022_02_03_110702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 2022_01_30_062510) do
     t.text "f_name"
     t.text "l_name"
     t.text "auth_token"
+    t.text "admin_profile_img"
     t.index ["auth_token"], name: "index_admins_on_auth_token", unique: true
     t.index ["confirmation_token"], name: "index_admins_on_confirmation_token", unique: true
     t.index ["email"], name: "index_admins_on_email", unique: true
@@ -88,7 +89,7 @@ ActiveRecord::Schema.define(version: 2022_01_30_062510) do
     t.text "l_name"
     t.text "auth_token"
     t.boolean "status", default: false
-    t.text "photo"
+    t.text "user_profile_img"
     t.index ["auth_token"], name: "index_users_on_auth_token", unique: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true

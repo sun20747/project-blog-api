@@ -5,17 +5,19 @@ class Api::V1::Blog::BlogsController < Api::V1::Blog::AppController
   # GET /blogs
   def index
     slug = params[:category]
+    limit = "ALL"
+    limit = params[:limit].to_i if params[:limit].present?
+    offset = params[:offset].to_i
     sql = "SELECT blogs.id,blogs.user_id,blogs.title,blogs.category,blogs.created_at,
-    blogs.updated_at,blogs.photo,blogs.content,users.email,users.f_name,users.l_name,users.status
-    FROM blogs INNER JOIN users ON (blogs.user_id = users.id)"
+    blogs.updated_at,blogs.photo,blogs.content,users.user_profile_img,users.email,users.f_name,users.l_name,users.status
+    FROM blogs INNER JOIN users ON (blogs.user_id = users.id) order by created_at desc LIMIT #{limit} OFFSET #{offset}"
 
     sql_slug = "SELECT blogs.id,blogs.user_id,blogs.title,blogs.category,blogs.created_at,
-    blogs.updated_at,blogs.photo,blogs.content,users.email,users.f_name,users.l_name,users.status
-    FROM blogs INNER JOIN users ON (blogs.user_id = users.id) WHERE category='#{slug}' "
+    blogs.updated_at,blogs.photo,blogs.content,user_profile_img,users.email,users.f_name,users.l_name,users.status
+    FROM blogs INNER JOIN users ON (blogs.user_id = users.id) WHERE category='#{slug}' order by created_at desc LIMIT #{limit} OFFSET #{offset} "
 
     @blogs = ActiveRecord::Base.connection.exec_query(slug == nil ? sql : sql_slug)
-
-
+    
     # @blogs = Blog.all
     # @blogs = @blogs.where(category: params[:category]) if params[:category].present?
     # blog = @blogs.where(category: params[:category]) if params[:category].present?
@@ -38,10 +40,10 @@ class Api::V1::Blog::BlogsController < Api::V1::Blog::AppController
   # POST /blogs
   def create
     @blog = Blog.new(blog_params)
-
     if @blog.save
       @blog.gen_user_blogs(@current_user.id,@blog.id)
       @blog.user_id = @current_user.id
+      @blog.save
       render json: @blog, status: :created, location: @blog
     else
       render json: @blog.errors, status: :unprocessable_entity
@@ -71,16 +73,12 @@ class Api::V1::Blog::BlogsController < Api::V1::Blog::AppController
   private
     # Use callbacks to share common setup or constraints between actions.
 
-    # def set_all
-    #     @blog_all = Blog.all
-    # end
-
     def set_blog
       @blog = Blog.find(params[:id],params[:category])
     end
 
     # Only allow a list of trusted parameters through.
     def blog_params
-      params.require(:blog).permit(:title, :content, :category, :photo, :user_id)
+      params.require(:blog).permit(:title, :content, :category, :photo, :user_id,:limit,:offset)
     end
 end

@@ -25,6 +25,7 @@
 #  f_name                 :text
 #  l_name                 :text
 #  auth_token             :text
+#  admin_profile_img      :text
 #
 # Indexes
 #
@@ -47,7 +48,7 @@ class Admin < ApplicationRecord
      def as_json(options = {})
        super(options).except("auth_token")
      end
-     
+    
      def generate_auth_token(force = false)
        # ||= เทียบค่าว่า auth_token เป็น nil หรือไม่
        #ถ้าไม่ nil ข้ามไปทำบรรทัดต่อไป

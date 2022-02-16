@@ -26,7 +26,7 @@
 #  l_name                 :text
 #  auth_token             :text
 #  status                 :boolean          default("false")
-#  photo                  :text
+#  user_profile_img       :text
 #
 # Indexes
 #
@@ -43,7 +43,7 @@ class User < ApplicationRecord
 
   def as_detail_user_json
     json = self.as_json
-    json[:user_blogs] = self.user_blogs.includes(:blog).map{|ub|ub.as_blog_json}
+    json[:user_blogs] = self.user_blogs.includes(:blog).order("created_at DESC").map{|ub|ub.as_blog_json}
     json
   end
   

@@ -25,6 +25,7 @@
 #  f_name                 :text
 #  l_name                 :text
 #  auth_token             :text
+#  admin_profile_img      :text
 #
 # Indexes
 #

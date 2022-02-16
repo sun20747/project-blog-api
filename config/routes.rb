@@ -33,12 +33,18 @@ Rails.application.routes.draw do
     namespace :v1 do
       namespace :admin do
         get "/", to: "admins#index"
-        post "sign_up", to: "admins#sign_up"
-        post "sign_in", to: "admins#sign_in"
         get "me/", to: "admins#me"
         get "show_blog", to: "admins#show_blog"
-        # put "update/:id", to: "admins#update"
-        # delete "destroy/:id", to: "admins#destroy"
+        get "show_users", to: "admins#show_users"
+        get "show_users_waiting", to: "admins#show_users_waiting"
+        post "sign_up", to: "admins#sign_up"
+        post "sign_in", to: "admins#sign_in"
+        post "confirmeduser/:id", to: "admins#confirmeduser"
+        put "resetpasswd/:id", to: "admins#resetpasswd"
+        delete "sign_out", to: "admins#sign_out"
+        delete "deleteuserwarining/:id", to: "admins#deleteuserwarining"
+        delete "deliteuserwhichblog/:id", to: "admins#deliteuserwhichblog"
+        delete "deleteblog/:id", to: "admins#deleteblog"
       end
     end
   end

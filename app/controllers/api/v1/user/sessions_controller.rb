@@ -47,7 +47,7 @@ class Api::V1::User::SessionsController < Api::V1::User::AppController
 
   private
     def user_params
-      params.require(:user).permit(:id,:email,:password,:password_confirmation,:f_name,:l_name)
+      params.require(:user).permit(:id,:email,:password,:password_confirmation,:f_name,:l_name,:user_profile_img)
     end
 
 end

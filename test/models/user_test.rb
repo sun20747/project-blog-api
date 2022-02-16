@@ -26,7 +26,7 @@
 #  l_name                 :text
 #  auth_token             :text
 #  status                 :boolean          default("false")
-#  photo                  :text
+#  user_profile_img       :text
 #
 # Indexes
 #

@@ -26,7 +26,6 @@ class Blog < ApplicationRecord
     def as_detail_blog_json
         json = self.as_json
         json[:user_blogs] = self.user_blogs.includes(:user).map{|ub|ub.as_user_json}
-        p json
         json
     end
 
