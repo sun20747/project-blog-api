@@ -96,6 +96,15 @@ before_action :set_current_admin, only: [:deleteblog,:confirmeduser,:resetpasswd
         Blog.find(params[:id]).destroy
       render json: {success:true}
     end
+
+    def dashboard
+      admins = Admin.count
+      users = User.where("confirmed_at IS not null").count
+      userswaiting = User.where("confirmed_at IS null").count
+      blogs = Blog.count
+      render json:{success:true,admins:admins,users:users,userswaiting:userswaiting,blogs:blogs}
+    end
+    
     
 
     private

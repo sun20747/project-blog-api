@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       namespace :admin do
         get "/", to: "admins#index"
+        get "dashboard/", to: "admins#dashboard"
         get "me/", to: "admins#me"
         get "show_blog", to: "admins#show_blog"
         get "show_users", to: "admins#show_users"
